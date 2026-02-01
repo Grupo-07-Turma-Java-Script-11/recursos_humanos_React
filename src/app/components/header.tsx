@@ -1,8 +1,10 @@
-import { Menu, X } from 'lucide-react';
+import { Link, Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
@@ -30,10 +32,13 @@ export function Header() {
             <a href="/contato" className="text-gray-600 hover:text-[#F08832] transition-colors font-medium">
               Contato
             </a>
-            <button className="bg-[#F08832] text-white px-6 py-2.5 rounded-lg hover:bg-[#d97728] transition-colors font-medium">
-              Acessar Sistema
-            </button>
+          <button 
+            onClick={() => navigate('/login')} // <-- O pulo do gato está aqui
+            className="bg-[#F08832] text-white px-6 py-2.5 rounded-lg hover:bg-[#d97728] transition-colors font-medium">
+                Acessar Sistema
+          </button>
           </nav>
+
 
           {/* Mobile Menu Button */}
           <button
