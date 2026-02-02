@@ -70,16 +70,14 @@ export default function Unidades() {
   };
 
   const handleExcluir = async (id: number) => {
-    if (confirm("Tem certeza que deseja excluir esta unidade?")) {
-      try {
-        await deletar(`/unidades/${id}`, {
-          headers: { Authorization: token }
-        });
-        alert("Unidade deletada com sucesso!");
-        await carregarUnidades();
-      } catch (error) {
-        alert("Erro ao excluir unidade.");
-      }
+    try {
+      await deletar(`/unidades/${id}`, {
+        headers: { Authorization: token }
+      });
+      alert("Unidade deletada com sucesso!");
+      await carregarUnidades();
+    } catch (error) {
+      alert("Erro ao excluir unidade.");
     }
   };
 
