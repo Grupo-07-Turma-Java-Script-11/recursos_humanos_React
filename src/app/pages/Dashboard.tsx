@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/button"; // Reutilizando componentes de UI
-import { 
-  Users, 
-  Calendar, 
-  Clock, 
-  TrendingUp, 
+import {
+  Users,
+  Calendar,
+  Clock,
+  TrendingUp,
   FileText,
   AlertCircle
 } from 'lucide-react';
@@ -21,7 +21,7 @@ export function Dashboard() {
     <div className="p-6 space-y-8">
       {/* Título e Boas-vindas */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Olá, João Silva</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Seja Bem Vindo!</h1>
         <p className="text-gray-500">Aqui está o que está acontecendo no seu portal hoje.</p>
       </div>
 

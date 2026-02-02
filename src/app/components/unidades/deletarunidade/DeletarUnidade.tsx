@@ -10,7 +10,7 @@ function DeletarUnidade() {
     const navigate = useNavigate()
     const [unidadeData, setUnidadeData] = useState<Unidade>({} as Unidade)
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    
+
     const { unidade, handleLogout } = useContext(AuthContext)
     const token = unidade.token
     const { id } = useParams<{ id: string }>()
@@ -61,11 +61,11 @@ function DeletarUnidade() {
     function retornar() {
         navigate("/unidades")
     }
-    
+
     return (
         <div className="flex items-center justify-center py-10">
             <div className="bg-white w-full max-w-md rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-                
+
                 {/* Cabeçalho de Alerta */}
                 <div className="bg-red-50 p-6 flex flex-col items-center text-center gap-3">
                     <div className="p-3 bg-red-100 rounded-full">
@@ -91,20 +91,20 @@ function DeletarUnidade() {
 
                 {/* Ações */}
                 <div className="flex p-6 pt-0 gap-3">
-                    <button 
+                    <button
                         className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-gray-600 bg-gray-100 hover:bg-gray-200 font-bold transition-all"
                         onClick={retornar}
                     >
                         <ArrowLeft size={18} />
                         Cancelar
                     </button>
-                    
-                    <button 
+
+                    <button
                         className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-white bg-red-500 hover:bg-red-600 font-bold transition-all shadow-lg shadow-red-100 disabled:opacity-50"
                         onClick={deletarUnidade}
                         disabled={isLoading}
                     >
-                        { isLoading ? (
+                        {isLoading ? (
                             <ClipLoader color="#ffffff" size={20} />
                         ) : (
                             <>

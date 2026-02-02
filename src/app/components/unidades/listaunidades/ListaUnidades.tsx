@@ -2,17 +2,53 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SyncLoader } from "react-spinners";
 import Unidade from "../../../../models/Unidade";
-import { buscar } from "../../../../services/Service";
+import { buscar, deletar } from "../../../../services/Service"; // Importe 'deletar'
 import CardUnidade from "../cardunidade/CardUnidade";
 import { AuthContext } from "../../../../contexts/AuthContext";
 
 function ListaUnidades() {
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [unidades, setUnidades] = useState<Unidade[]>([]);
-
   const { unidade, handleLogout } = useContext(AuthContext);
   const token = unidade.token;
+  const navigate = useNavigate();
+
+  async function buscarUnidades() {
+    try {
+      setIsLoading(true);
+      await buscar('/unidades', setUnidades, {
+        headers: { Authorization: token },
+      });
+    } catch (error: any) {
+      if (error.toString().includes('401')) handleLogout();
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  // Função para deletar que será passada para o Card
+  // Dentro de ListaUnidades.tsx
+  async function deletarUnidade(id: number) {
+    try {
+      setIsLoading(true);
+      // 1. Chama a API para deletar
+      await deletar(`/unidades/${id}`, {
+        headers: { Authorization: token },
+      });
+
+      // 3. Atualiza o estado local para refletir a exclusão imediatamente
+      setUnidades(unidades.filter((unidade) => unidade.id !== id));
+
+    } catch (error: any) {
+      if (error.toString().includes('401')) {
+        handleLogout();
+      } else {
+        alert('Erro ao deletar a unidade.');
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   useEffect(() => {
     if (token === '') {
@@ -23,45 +59,25 @@ function ListaUnidades() {
     }
   }, [token]);
 
-  async function buscarUnidades() {
-    try {
-      setIsLoading(true);
-      await buscar('/unidades', setUnidades, {
-        headers: { Authorization: token },
-      });
-    } catch (error: any) {
-      if (error.toString().includes('401')) {
-        handleLogout();
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
   return (
-    <>
+    <div className="container mx-auto my-4">
       {isLoading && (
-        <div className="flex justify-center w-full my-8">
+        <div className="flex justify-center my-8">
           <SyncLoader color="#312e81" size={32} />
         </div>
       )}
 
-      <div className="flex justify-center w-full my-4">
-        <div className="container flex flex-col">
-          {!isLoading && unidades.length === 0 && (
-            <span className="text-3xl text-center my-8">
-              Nenhuma Unidade foi encontrada!
-            </span>
-          )}
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {unidades.map((unidade) => (
-              <CardUnidade key={unidade.id} unidade={unidade} />
-            ))}
-          </div>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {unidades.map((u) => (
+          <CardUnidade
+            key={u.id}
+            unidade={u}
+            onEdit={() => { }} // Implemente sua lógica de edição aqui
+            onDelete={deletarUnidade} // Passa a função de deletar
+          />
+        ))}
       </div>
-    </>
+    </div>
   );
 }
 
