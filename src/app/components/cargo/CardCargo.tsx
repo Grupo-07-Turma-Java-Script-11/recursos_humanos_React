@@ -1,5 +1,16 @@
-import { Briefcase, Users, Info, Edit, Trash2 } from 'lucide-react';
+import { Briefcase, Users, Info, Edit, Trash2, AlertTriangle } from 'lucide-react';
 import { Button } from "../../components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../../components/ui/alert-dialog"; // Importando os componentes do modal
 
 interface Cargo {
   id?: number;
@@ -31,14 +42,40 @@ export function CardCargo({ cargo, onEdit, onDelete }: CardCargoProps) {
           >
             <Edit size={16} />
           </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="cursor-pointer h-8 w-8 text-gray-400 hover:text-red-500"
-            onClick={() => cargo.id && onDelete(cargo.id)}
-          >
-            <Trash2 size={16} />
-          </Button>
+
+          {/* Implementação do Modal de Deleção */}
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="cursor-pointer h-8 w-8 text-gray-400 hover:text-red-500"
+              >
+                <Trash2 size={16} />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <div className="flex items-center gap-2 text-red-600">
+                  <AlertTriangle size={20} />
+                  <AlertDialogTitle>Excluir Cargo</AlertDialogTitle>
+                </div>
+                <AlertDialogDescription>
+                  Você tem certeza que deseja apagar o cargo <strong>{cargo.nome}</strong>?
+                  Esta ação não pode ser desfeita e removerá o vínculo com colaboradores.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction
+                  className="bg-red-500 hover:bg-red-600"
+                  onClick={() => cargo.id && onDelete(cargo.id)} // Aciona a função de deletar no clique de confirmação
+                >
+                  Confirmar Exclusão
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
 

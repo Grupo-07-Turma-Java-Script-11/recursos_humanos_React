@@ -1,6 +1,7 @@
 import { createContext, type ReactNode, useState } from "react"
 import { login } from "../services/Service"
 import UnidadeLogin from "../models/UnidadeLogin"
+import { ToastAlerta } from "../utils/ToastAlerta"
 
 interface AuthContextProps {
     unidade: UnidadeLogin
@@ -32,9 +33,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setIsLoading(true)
         try {
             await login(`/login/logar`, unidadeLogin, setUnidade)
-            alert("A Unidade foi autenticada com sucesso!")
+            ToastAlerta("Usuário foi autenticado com sucesso!", "sucesso")
         } catch (error) {
-            alert("Os Dados da unidade estão inconsistentes!")
+            ToastAlerta("Os Dados da unidade estão inconsistentes!", "erro")
         }
         setIsLoading(false)
     }

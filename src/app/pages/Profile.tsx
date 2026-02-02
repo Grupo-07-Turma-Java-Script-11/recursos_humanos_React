@@ -3,6 +3,7 @@ import { User, Camera, Save, Key, UserCircle, Mail } from 'lucide-react';
 import { AuthContext } from '../../contexts/AuthContext';
 import Unidade from '../../models/Unidade';
 import { Button } from '../components/ui/button';
+import { ToastAlerta } from "../../utils/ToastAlerta"
 
 
 export function Profile() {
@@ -35,7 +36,7 @@ export function Profile() {
 
   const handleSave = () => {
     setIsEditing(false);
-    alert("Informações da unidade atualizadas com sucesso!");
+    ToastAlerta("Informações da unidade atualizadas com sucesso!", "sucesso");
   };
 
   return (

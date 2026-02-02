@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { UserPlus, Search, Loader2, Trash2, Edit } from 'lucide-react';
+import { UserPlus, Search, Loader2, Trash2, Edit, AlertTriangle } from 'lucide-react';
 import { ModalColaborador } from '../components/colaborador/ModalColaborador';
 import { Colaborador } from '../../models/Colaborador';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -14,18 +14,28 @@ import {
   TableHeader,
   TableRow,
 } from "../components/ui/table";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../components/ui/alert-dialog";
+import { ToastAlerta } from "../../utils/ToastAlerta"
 
 export function Employees() {
   const [colaboradores, setColaboradores] = useState<Colaborador[]>([]);
   const [loading, setLoading] = useState(true);
-  const [actionLoading, setActionLoading] = useState(false);
   const [busca, setBusca] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedColaborador, setSelectedColaborador] = useState<Colaborador | null>(null);
 
   const { unidade } = useContext(AuthContext);
 
-  // Copiando exatamente a lógica que funciona no seu Roles.tsx
   const config = {
     headers: { Authorization: unidade.token }
   };
@@ -46,13 +56,14 @@ export function Employees() {
     carregarColaboradores();
   }, [unidade.token]);
 
+  // Função ajustada: sem o confirm() do navegador
   const handleExcluir = async (id: number) => {
-    if (!confirm("Deseja realmente remover este colaborador?")) return;
     try {
       await deletar(`/colaboradores/${id}`, config);
+      ToastAlerta("Colaborador deletado com sucesso!.", "sucesso");
       carregarColaboradores();
     } catch (error) {
-      alert("Erro ao excluir colaborador.");
+      ToastAlerta("Erro ao excluir colaborador.", "erro");
     }
   };
 
@@ -110,15 +121,45 @@ export function Employees() {
                   <TableRow key={colab.id}>
                     <TableCell className="font-mono">{colab.matricula}</TableCell>
                     <TableCell className="font-medium">{colab.nome}</TableCell>
-                    <TableCell>{new Date(colab.data_admissao).toLocaleDateString()}</TableCell>
+                    <TableCell>
+                      {new Date(colab.data_admissao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
+                    </TableCell>
                     <TableCell>R$ {colab.salario_base}</TableCell>
                     <TableCell className="text-right flex justify-end gap-2">
                       <Button variant="ghost" size="icon" className="cursor-pointer text-blue-600" onClick={() => { setSelectedColaborador(colab); setIsModalOpen(true); }}>
                         <Edit size={18} />
                       </Button>
-                      <Button variant="ghost" size="icon" className="cursor-pointer text-red-600" onClick={() => colab.id && handleExcluir(colab.id)}>
-                        <Trash2 size={18} />
-                      </Button>
+
+                      {/* Implementação do Modal de Deleção na Tabela */}
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="ghost" size="icon" className="cursor-pointer text-red-600">
+                            <Trash2 size={18} />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <div className="flex items-center gap-2 text-red-600">
+                              <AlertTriangle size={20} />
+                              <AlertDialogTitle>Excluir Colaborador</AlertDialogTitle>
+                            </div>
+                            <AlertDialogDescription>
+                              Você tem certeza que deseja remover <strong>{colab.nome}</strong>?
+                              Esta ação apagará permanentemente os registros deste funcionário.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                            <AlertDialogAction
+                              className="bg-red-500 hover:bg-red-600"
+                              onClick={() => colab.id && handleExcluir(colab.id)}
+                            >
+                              Confirmar Exclusão
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+
                     </TableCell>
                   </TableRow>
                 ))
@@ -133,7 +174,7 @@ export function Employees() {
       <ModalColaborador
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onSubmit={carregarColaboradores} // Recarregar após salvar
+        onSubmit={carregarColaboradores}
         colaboradorParaEditar={selectedColaborador}
       />
     </div>

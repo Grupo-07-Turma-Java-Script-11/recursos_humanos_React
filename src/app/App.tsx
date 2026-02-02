@@ -19,6 +19,8 @@ import { Employees } from './pages/Employees';
 import { Profile } from './pages/Profile';
 import { Holerite } from './pages/Holerite';
 import FormUnidade from './components/unidades/formunidade/FormUnidade';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 // 1. Layout de Autenticação
 function AuthLayout() {
@@ -69,6 +71,7 @@ function InternalLayout() {
 export default function App() {
   return (
     <AuthProvider>
+      <ToastContainer />
       <Router>
         <Routes>
 

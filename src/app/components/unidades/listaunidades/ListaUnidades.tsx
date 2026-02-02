@@ -5,6 +5,7 @@ import Unidade from "../../../../models/Unidade";
 import { buscar, deletar } from "../../../../services/Service"; // Importe 'deletar'
 import CardUnidade from "../cardunidade/CardUnidade";
 import { AuthContext } from "../../../../contexts/AuthContext";
+import { ToastAlerta } from "../../../../utils/ToastAlerta"
 
 function ListaUnidades() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -26,8 +27,6 @@ function ListaUnidades() {
     }
   }
 
-  // Função para deletar que será passada para o Card
-  // Dentro de ListaUnidades.tsx
   async function deletarUnidade(id: number) {
     try {
       setIsLoading(true);
@@ -43,7 +42,7 @@ function ListaUnidades() {
       if (error.toString().includes('401')) {
         handleLogout();
       } else {
-        alert('Erro ao deletar a unidade.');
+        ToastAlerta('Erro ao deletar a unidade.', 'erro');
       }
     } finally {
       setIsLoading(false);
@@ -52,7 +51,7 @@ function ListaUnidades() {
 
   useEffect(() => {
     if (token === '') {
-      alert('Você precisa estar logado!');
+      ToastAlerta('Você precisa estar logado!', 'info');
       navigate('/');
     } else {
       buscarUnidades();

@@ -6,6 +6,7 @@ import { ModalCargo } from '../components/cargo/ModalCargo';
 import { Cargo } from '../../models/Cargo';
 import { AuthContext } from '../../contexts/AuthContext';
 import { atualizar, buscar, cadastrar, deletar } from '../../services/Service';
+import { ToastAlerta } from "../../utils/ToastAlerta"
 
 
 export function Roles() {
@@ -48,11 +49,11 @@ export function Roles() {
       if (selectedCargo?.id) {
         // Atualiza o cargo existente
         await atualizar('/cargos', { ...data, id: selectedCargo.id }, setCargos, header);
-        alert("Cargo atulizado com sucesso")
+        ToastAlerta("Cargo atulizado com sucesso", "sucesso")
       } else {
         // Cadastra um novo cargo
         await cadastrar('/cargos', data, setCargos, header);
-        alert("Cargo cadastrado com sucesso")
+        ToastAlerta("Cargo cadastrado com sucesso", "sucesso")
       }
 
       // Recarrega a lista para garantir sincronia com o banco
@@ -61,7 +62,7 @@ export function Roles() {
       setSelectedCargo(null);
     } catch (error) {
       console.error("Erro ao salvar cargo:", error);
-      alert("Erro ao salvar cargo. Verifique sua conexão ou permissões.");
+      ToastAlerta("Erro ao salvar cargo. Verifique sua conexão ou permissões.", "erro");
     } finally {
       setActionLoading(false);
     }
@@ -72,10 +73,10 @@ export function Roles() {
       await deletar(`/cargos/${id}`, {
         headers: { Authorization: token }
       });
-      alert("Cargo deletado com sucesso")
+      ToastAlerta("Cargo deletado com sucesso", "sucesso")
       await carregarCargos();
     } catch (error) {
-      alert("Erro ao excluir cargo.");
+      ToastAlerta("Erro ao excluir cargo.", "erro");
     }
   };
 

@@ -6,6 +6,7 @@ import ModalUnidade from '../components/unidades/modalunidade/ModalUnidade';
 import Unidade from '../../models/Unidade';
 import { AuthContext } from '../../contexts/AuthContext';
 import { atualizar, buscar, cadastrar, deletar } from '../../services/Service';
+import { ToastAlerta } from "../../utils/ToastAlerta"
 import { toast } from 'sonner'; // Opcional: Adicionar feedback visual se tiver a lib instalada, ou usar alert
 
 export default function Unidades() {
@@ -50,11 +51,11 @@ export default function Unidades() {
       if (selectedUnidade?.id) {
         // Atualiza
         await atualizar('/unidades/atualizar', { ...data, id: selectedUnidade.id }, setUnidades, header);
-        alert("Unidade atualizada com sucesso!");
+        ToastAlerta("Unidade atualizada com sucesso!", "sucesso");
       } else {
         // Cadastra
         await cadastrar('/unidades/cadastrar', data, setUnidades, header);
-        alert("Unidade cadastrada com sucesso!");
+        ToastAlerta("Unidade cadastrada com sucesso!", "sucesso");
       }
 
       await carregarUnidades();
@@ -63,7 +64,7 @@ export default function Unidades() {
     } catch (error: any) {
       console.error("Erro ao salvar unidade:", error);
       const msg = error.response?.data?.message;
-      alert(`Erro: ${Array.isArray(msg) ? msg.join(", ") : msg || "Erro ao salvar"}`);
+      ToastAlerta(`Erro: ${Array.isArray(msg) ? msg.join(", ") : msg || "Erro ao salvar"}`, "erro");
     } finally {
       setActionLoading(false);
     }
@@ -74,10 +75,10 @@ export default function Unidades() {
       await deletar(`/unidades/${id}`, {
         headers: { Authorization: token }
       });
-      alert("Unidade deletada com sucesso!");
+      ToastAlerta("Unidade deletada com sucesso!", "sucesso");
       await carregarUnidades();
     } catch (error) {
-      alert("Erro ao excluir unidade.");
+      ToastAlerta("Erro ao excluir unidade.", "erro");
     }
   };
 

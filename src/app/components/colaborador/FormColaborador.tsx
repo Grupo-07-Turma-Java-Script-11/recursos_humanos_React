@@ -7,6 +7,7 @@ import { atualizar, cadastrar, buscar } from '../../../services/Service';
 import { Label } from '@radix-ui/react-label';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { ToastAlerta } from "../../../utils/ToastAlerta"
 
 interface FormColaboradorProps {
   initialData?: Colaborador | null;
@@ -71,15 +72,15 @@ export function FormColaborador({ initialData, onSuccess, onCancel }: FormColabo
     try {
       if (initialData?.id) {
         await atualizar('/colaboradores', { ...formData, id: initialData.id }, () => { }, config); //
-        alert("Colaborador atualizado com sucesso!");
+        ToastAlerta("Colaborador atualizado com sucesso!", "sucesso");
       } else {
         await cadastrar('/colaboradores', formData, () => { }, config); //
-        alert("Colaborador cadastrado com sucesso!");
+        ToastAlerta("Colaborador cadastrado com sucesso!", "sucesso");
       }
       onSuccess();
     } catch (error) {
       console.error(error);
-      alert("Erro ao salvar dados.");
+      ToastAlerta("Erro ao salvar dados.", "erro");
     } finally {
       setLoading(false);
     }
