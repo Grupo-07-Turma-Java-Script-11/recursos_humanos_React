@@ -1,66 +1,89 @@
-import React from 'react'
+import { useEffect, useState, useContext } from 'react';
+import { Search, Loader2, FileText } from 'lucide-react';
+import { AuthContext } from '../../contexts/AuthContext';
+import { buscar } from '../../services/Service';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components/ui/table";
+import { ModalHolerite } from '../components/holerite/ModalHolerite.tsx'; // Ajuste o nome se necessário
+import { Colaborador } from '../../models/Colaborador';
 
-function Holerite() {
-    return (
-        <div className="pt-32 pb-24 px-6 bg-white min-h-screen">
-            <div className="max-w-7xl mx-auto">
-                <h2 className="text-4xl font-bold text-gray-900 mb-10">{titulo}</h2>
+export function Holerite() {
+  const [colaboradores, setColaboradores] = useState<Colaborador[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [busca, setBusca] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedColaborador, setSelectedColaborador] = useState<Colaborador | null>(null);
 
-                <div className="bg-gray-50 rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-                    <table className="min-w-full text-sm">
-                        <thead className="bg-gray-100 text-gray-600">
-                            <tr>
-                                <th className="px-6 py-4 text-left font-semibold">Nome</th>
-                                <th className="px-6 py-4 text-left font-semibold">Cargo</th>
-                                <th className="px-6 py-4 text-left font-semibold">Matrícula</th>
-                                <th className="px-6 py-4 text-left font-semibold">Unidade</th>
-                                <th className="px-6 py-4 text-center font-semibold">
-                                    Holerith
-                                </th>
-                            </tr>
-                        </thead>
+  const { unidade } = useContext(AuthContext);
+  const config = { headers: { Authorization: unidade.token } };
 
-                        <tbody className="divide-y divide-gray-200">
-                            {colaboradores.length > 0 ? (
-                                colaboradores.map((col) => (
-                                    <tr key={col.id} className="hover:bg-white transition-colors">
-                                        <td className="px-6 py-4 font-bold text-gray-900">
-                                            {col.nome}
-                                        </td>
-                                        <td className="px-6 py-4 text-gray-600">
-                                            {col.cargo?.nome}
-                                        </td>
-                                        <td className="px-6 py-4 text-gray-600">{col.matricula}</td>
-                                        <td className="px-6 py-4 text-gray-600">
-                                            {col.unidade?.nome}
-                                        </td>
-                                        <td className="px-6 py-4 text-center">
-                                            <button
-                                                onClick={() => gerarHolerith(col)}
-                                                className="bg-[#F08832] hover:bg-[#d97728] text-white rounded-xl py-2 px-4 flex items-center gap-2 mx-auto transition-transform hover:scale-105"
-                                            >
-                                                <FileText className="w-4 h-4" />
-                                                Gerar Holerith
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td
-                                        colSpan={5}
-                                        className="px-6 py-10 text-center text-gray-400"
-                                    >
-                                        Nenhum colaborador encontrado para esta unidade.
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+  useEffect(() => {
+    if (unidade.token) {
+      buscar('/colaboradores', setColaboradores, config);
+      setLoading(false);
+    }
+  }, [unidade.token]);
+
+  const colaboradoresFiltrados = colaboradores.filter(c => 
+    c.nome?.toLowerCase().includes(busca.toLowerCase())
+  );
+
+  return (
+    <div className="p-6 space-y-6">
+      <h1 className="text-2xl font-bold text-gray-900">Gerar Holerites</h1>
+      
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="p-4 border-b border-gray-100">
+          <div className="relative max-w-sm">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            <Input className="pl-10" placeholder="Buscar colaborador..." value={busca} onChange={(e) => setBusca(e.target.value)} />
+          </div>
         </div>
-    );
-}
 
-export default Holerite
+        {loading ? (
+          <div className="flex justify-center py-20"><Loader2 className="animate-spin text-[#F08832]" size={40} /></div>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Matrícula</TableHead>
+                <TableHead>Nome</TableHead>
+                <TableHead>Cargo</TableHead>                
+                <TableHead>Salário Base</TableHead>
+                <TableHead className="text-right pr-16">Ação</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {colaboradoresFiltrados.map((colab) => (
+                <TableRow key={colab.id}>
+                 <TableCell className="font-mono">{colab.matricula}</TableCell>
+                    <TableCell className="font-medium">{colab.nome}</TableCell>
+                    <TableCell className="font-medium">{colab.cargo?.nome}</TableCell>
+                    <TableCell>R$ {colab.salario_base}</TableCell>
+                  <TableCell className="text-right">
+                    <Button 
+                      variant="outline" 
+                      className="gap-2 border-[#F08832] text-[#F08832] hover:bg-[#F08832] hover:text-white"
+                      onClick={() => { setSelectedColaborador(colab); setIsModalOpen(true); }}
+                    >
+                      <FileText size={16} /> Gerar Holerite
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+      </div>
+
+      {selectedColaborador && (
+        <ModalHolerite 
+          isOpen={isModalOpen} 
+          onClose={() => setIsModalOpen(false)} 
+          colaborador={selectedColaborador} 
+        />
+      )}
+    </div>
+  );
+}

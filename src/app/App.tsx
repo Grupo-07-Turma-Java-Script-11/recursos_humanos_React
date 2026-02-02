@@ -16,8 +16,10 @@ import FormUnidade from './components/unidades/formunidade/FormUnidade';
 import DeletarUnidade from './components/unidades/deletarunidade/DeletarUnidade';
 import Head from './components/head/Head';
 import { ArrowLeft } from 'lucide-react';
-import { Cargo } from './components/cargo/Cargo';
-import { Colaboradores } from './components/colaboradores/Colaboradores';
+import { Roles } from './pages/Roles';
+import { Employees } from './pages/Employees';
+import { Profile } from './pages/Profile';
+import { Holerite } from './pages/Holerite';
 
 // 1. Layout de Autenticação
 function AuthLayout() {
@@ -92,8 +94,10 @@ export default function App() {
             <Route path="/unidades/cadastrar" element={<FormUnidade />} />
             <Route path="/unidades/atualizar/:id" element={<FormUnidade />} />
             <Route path="/unidades/:id" element={<DeletarUnidade />} />
-            <Route path="/cargos" element={<Cargo />} />
-            <Route path="/colaboradores" element={<Colaboradores />} />
+            <Route path="/cargos" element={<Roles />} />
+            <Route path="/colaboradores" element={<Employees />} />
+            <Route path="/perfil" element={<Profile />} />
+            <Route path="/holerite" element={<Holerite />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />
