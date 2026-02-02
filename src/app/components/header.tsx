@@ -30,9 +30,9 @@ export function Header() {
             <a href="/contato" className="text-gray-600 hover:text-[#F08832] transition-colors font-medium">
               Contato
             </a>
-            <button className="bg-[#F08832] text-white px-6 py-2.5 rounded-lg hover:bg-[#d97728] transition-colors font-medium">
+            <a href="/login" className="bg-[#F08832] text-white px-6 py-2.5 rounded-lg hover:bg-[#d97728] transition-colors font-medium">
               Acessar Sistema
-            </button>
+            </a>
           </nav>
 
           {/* Mobile Menu Button */}
