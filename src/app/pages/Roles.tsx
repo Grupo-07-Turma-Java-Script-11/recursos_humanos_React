@@ -1,43 +1,102 @@
-import { Briefcase, Plus, Users } from 'lucide-react';
-import { Button } from "@/app/components/ui/button";
+import { useEffect, useState, useContext } from 'react';
+import { Plus, Loader2, Briefcase } from 'lucide-react';
+import { Button } from '../components/ui/button'
+import { buscar, cadastrar, atualizar, deletar } from '../services/api';
+import { AuthContext } from '../contexts/AuthContext';
+import { CardCargo } from '../components/cargo/CardCargo';
+import { ModalCargo } from '../components/cargo/ModalCargo';
+import { Cargo } from '../models/Cargo';
 
 export function Roles() {
-  const cargos = [
-    { titulo: "Desenvolvedor Full Stack", departamento: "Tecnologia", nivel: "Pleno", qtd: 8 },
-    { titulo: "Analista de RH", departamento: "Recursos Humanos", nivel: "Sênior", qtd: 2 },
-    { titulo: "Designer UI/UX", departamento: "Produto", nivel: "Júnior", qtd: 4 },
-  ];
+  const [cargos, setCargos] = useState<Cargo[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCargo, setSelectedCargo] = useState<Cargo | null>(null);
+
+  const { usuario } = useContext(AuthContext);
+
+  const carregarCargos = async () => {
+    try {
+      setLoading(true);
+      // O token agora é injetado automaticamente pelo interceptor do api.ts
+      await buscar('/cargos', setCargos);
+    } catch (error) {
+      console.error("Erro ao carregar cargos:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (usuario.token) {
+      carregarCargos();
+    }
+  }, [usuario.token]);
+
+  const handleSalvar = async (data: Cargo) => {
+    setActionLoading(true);
+    try {
+      if (selectedCargo?.id) {
+        await atualizar('/cargos', { ...data, id: selectedCargo.id }, () => {});
+      } else {
+        await cadastrar('/cargos', data, () => {});
+      }
+      await carregarCargos();
+      setIsModalOpen(false);
+      setSelectedCargo(null);
+    } catch (error) {
+      alert("Erro ao salvar cargo.");
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleExcluir = async (id: number) => {
+    try {
+      await deletar(`/cargos/${id}`);
+      await carregarCargos();
+    } catch (error) {
+      alert("Erro ao excluir cargo.");
+    }
+  };
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex justify-between items-center">
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Cargos e Funções</h1>
-          <p className="text-gray-500">Estrutura organizacional da empresa.</p>
+          <p className="text-gray-500 text-sm">Gerencie a estrutura hierárquica</p>
         </div>
-        <Button className="bg-[#F08832] hover:bg-[#d97728] gap-2">
+        <Button onClick={() => setIsModalOpen(true)} className="bg-[#F08832] hover:bg-[#d97728] gap-2">
           <Plus size={18} /> Novo Cargo
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {cargos.map((cargo, index) => (
-          <div key={index} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:border-[#F08832]/50 transition-all group">
-            <div className="flex justify-between items-start mb-4">
-              <div className="p-3 bg-orange-50 rounded-lg text-[#F08832]">
-                <Briefcase size={24} />
-              </div>
-              <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{cargo.nivel}</span>
-            </div>
-            <h3 className="text-lg font-bold text-gray-900 group-hover:text-[#F08832] transition-colors">{cargo.titulo}</h3>
-            <p className="text-sm text-gray-500 mb-4">{cargo.departamento}</p>
-            <div className="flex items-center gap-2 text-sm text-gray-600 font-medium">
-              <Users size={16} />
-              {cargo.qtd} Colaboradores
-            </div>
-          </div>
-        ))}
-      </div>
+      {loading ? (
+        <div className="flex justify-center py-20">
+          <Loader2 className="animate-spin text-[#F08832]" size={40} />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {cargos.map((cargo) => (
+            <CardCargo 
+              key={cargo.id} 
+              cargo={cargo} 
+              onEdit={(c) => { setSelectedCargo(c); setIsModalOpen(true); }} 
+              onDelete={handleExcluir} 
+            />
+          ))}
+        </div>
+      )}
+
+      <ModalCargo 
+        isOpen={isModalOpen} 
+        onClose={() => { setIsModalOpen(false); setSelectedCargo(null); }} 
+        onSubmit={handleSalvar}
+        cargoParaEditar={selectedCargo}
+        loading={actionLoading}
+      />
     </div>
   );
 }

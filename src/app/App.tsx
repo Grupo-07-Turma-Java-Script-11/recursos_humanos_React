@@ -17,6 +17,7 @@ import { Employees } from './pages/Employees';
 import { Roles } from './pages/Roles';
 import { Units } from './pages/Units';
 import { Settings } from './pages/Settings';
+import { AuthProvider } from './contexts/AuthContext';
 
 function AppContent() {
   const location = useLocation();
@@ -24,6 +25,7 @@ function AppContent() {
   const esconderFooter = rotasInternas || location.pathname === '/login';
 
   return (
+    <AuthProvider>
     <div className="flex flex-col min-h-screen bg-white text-gray-900">
       {/* Header Fixo */}
       {rotasInternas ? <HeaderInterno /> : location.pathname !== '/login' ? <Header /> : null}
@@ -54,6 +56,7 @@ function AppContent() {
 
       {!esconderFooter && <Footer />}
     </div>
+    </AuthProvider>
   );
 }
 
