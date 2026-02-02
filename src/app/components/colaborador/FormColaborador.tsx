@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
 import { Colaborador } from '../../../models/Colaborador';
-import { Cargo } from '../../../models/Cargo'; 
+import { Cargo } from '../../../models/Cargo';
 import Unidade from '../../../models/Unidade'; // Importe o model de Unidade
 import { AuthContext } from '../../../contexts/AuthContext';
-import { atualizar, cadastrar, buscar } from '../../../services/Service'; 
+import { atualizar, cadastrar, buscar } from '../../../services/Service';
 import { Label } from '@radix-ui/react-label';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
@@ -17,9 +17,9 @@ interface FormColaboradorProps {
 export function FormColaborador({ initialData, onSuccess, onCancel }: FormColaboradorProps) {
   const { unidade: unidadeLogada } = useContext(AuthContext); //
   const [loading, setLoading] = useState(false);
-  const [cargos, setCargos] = useState<Cargo[]>([]); 
+  const [cargos, setCargos] = useState<Cargo[]>([]);
   const [unidades, setUnidades] = useState<Unidade[]>([]); // Estado para armazenar as unidades
-  
+
   const [formData, setFormData] = useState<Colaborador>({
     nome: '',
     matricula: 0,
@@ -70,10 +70,10 @@ export function FormColaborador({ initialData, onSuccess, onCancel }: FormColabo
 
     try {
       if (initialData?.id) {
-        await atualizar('/colaboradores', { ...formData, id: initialData.id }, () => {}, config); //
+        await atualizar('/colaboradores', { ...formData, id: initialData.id }, () => { }, config); //
         alert("Colaborador atualizado com sucesso!");
       } else {
-        await cadastrar('/colaboradores', formData, () => {}, config); //
+        await cadastrar('/colaboradores', formData, () => { }, config); //
         alert("Colaborador cadastrado com sucesso!");
       }
       onSuccess();
@@ -143,8 +143,8 @@ export function FormColaborador({ initialData, onSuccess, onCancel }: FormColabo
       </div>
 
       <div className="flex justify-end gap-3 pt-4 border-t">
-        <Button variant="outline" type="button" onClick={onCancel}>Cancelar</Button>
-        <Button type="submit" className="bg-[#F08832]" disabled={loading}>
+        <Button variant="outline" type="button" onClick={onCancel} className='cursor-pointer'>Cancelar</Button>
+        <Button type="submit" className="cursor-pointer bg-[#F08832]" disabled={loading}>
           {loading ? "Salvando..." : "Confirmar"}
         </Button>
       </div>

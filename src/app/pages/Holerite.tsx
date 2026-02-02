@@ -25,14 +25,14 @@ export function Holerite() {
     }
   }, [unidade.token]);
 
-  const colaboradoresFiltrados = colaboradores.filter(c => 
+  const colaboradoresFiltrados = colaboradores.filter(c =>
     c.nome?.toLowerCase().includes(busca.toLowerCase())
   );
 
   return (
     <div className="p-6 space-y-6">
       <h1 className="text-2xl font-bold text-gray-900">Gerar Holerites</h1>
-      
+
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="p-4 border-b border-gray-100">
           <div className="relative max-w-sm">
@@ -49,7 +49,7 @@ export function Holerite() {
               <TableRow>
                 <TableHead>Matrícula</TableHead>
                 <TableHead>Nome</TableHead>
-                <TableHead>Cargo</TableHead>                
+                <TableHead>Cargo</TableHead>
                 <TableHead>Salário Base</TableHead>
                 <TableHead className="text-right pr-16">Ação</TableHead>
               </TableRow>
@@ -57,14 +57,14 @@ export function Holerite() {
             <TableBody>
               {colaboradoresFiltrados.map((colab) => (
                 <TableRow key={colab.id}>
-                 <TableCell className="font-mono">{colab.matricula}</TableCell>
-                    <TableCell className="font-medium">{colab.nome}</TableCell>
-                    <TableCell className="font-medium">{colab.cargo?.nome}</TableCell>
-                    <TableCell>R$ {colab.salario_base}</TableCell>
+                  <TableCell className="font-mono">{colab.matricula}</TableCell>
+                  <TableCell className="font-medium">{colab.nome}</TableCell>
+                  <TableCell className="font-medium">{colab.cargo?.nome}</TableCell>
+                  <TableCell>R$ {colab.salario_base}</TableCell>
                   <TableCell className="text-right">
-                    <Button 
-                      variant="outline" 
-                      className="gap-2 border-[#F08832] text-[#F08832] hover:bg-[#F08832] hover:text-white"
+                    <Button
+                      variant="outline"
+                      className="cursor-pointer gap-2 border-[#F08832] text-[#F08832] hover:bg-[#F08832] hover:text-white"
                       onClick={() => { setSelectedColaborador(colab); setIsModalOpen(true); }}
                     >
                       <FileText size={16} /> Gerar Holerite
@@ -78,10 +78,10 @@ export function Holerite() {
       </div>
 
       {selectedColaborador && (
-        <ModalHolerite 
-          isOpen={isModalOpen} 
-          onClose={() => setIsModalOpen(false)} 
-          colaborador={selectedColaborador} 
+        <ModalHolerite
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          colaborador={selectedColaborador}
         />
       )}
     </div>

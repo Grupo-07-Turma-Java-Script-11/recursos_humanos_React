@@ -1,5 +1,5 @@
 export default interface Unidade {
-    id?: number;
+    id: number;
     nome: string;
     usuario: string;
     senha: string;

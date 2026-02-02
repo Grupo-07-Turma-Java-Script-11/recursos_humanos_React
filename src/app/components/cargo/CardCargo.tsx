@@ -23,37 +23,37 @@ export function CardCargo({ cargo, onEdit, onDelete }: CardCargoProps) {
           <Briefcase size={24} />
         </div>
         <div className="flex gap-1">
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="h-8 w-8 text-gray-400 hover:text-blue-500"
+          <Button
+            variant="ghost"
+            size="icon"
+            className="cursor-pointer h-8 w-8 text-gray-400 hover:text-blue-500"
             onClick={() => onEdit(cargo)}
           >
             <Edit size={16} />
           </Button>
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="h-8 w-8 text-gray-400 hover:text-red-500"
+          <Button
+            variant="ghost"
+            size="icon"
+            className="cursor-pointer h-8 w-8 text-gray-400 hover:text-red-500"
             onClick={() => cargo.id && onDelete(cargo.id)}
           >
             <Trash2 size={16} />
           </Button>
         </div>
       </div>
-      
+
       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 mb-2">
         {cargo.nivel_hierarquico}
       </span>
-      
+
       <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-[#F08832] transition-colors">
         {cargo.nome}
       </h3>
-      
+
       <p className="text-sm text-gray-500 mb-4 line-clamp-2 min-h-[40px]">
         {cargo.descricao_funcao}
       </p>
-      
+
       <div className="pt-4 border-t flex justify-between items-center">
         <div className="flex items-center gap-2 text-sm text-gray-600">
           <Users size={16} className="text-[#F08832]" />

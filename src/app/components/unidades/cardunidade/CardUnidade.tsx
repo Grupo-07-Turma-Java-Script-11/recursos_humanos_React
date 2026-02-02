@@ -1,55 +1,67 @@
-import { Link } from 'react-router-dom';
+import { Building2, User, Edit, Trash2, MapPin } from 'lucide-react';
+import { Button } from "../../ui/button";
 import Unidade from '../../../../models/Unidade';
-import { MapPin, Edit3, Trash2, Globe } from 'lucide-react'; 
 
 interface CardUnidadeProps {
     unidade: Unidade;
+    onEdit: (unidade: Unidade) => void;
+    onDelete: (id: number) => void;
 }
 
-function CardUnidade({ unidade }: CardUnidadeProps) {
+function CardUnidade({ unidade, onEdit, onDelete }: CardUnidadeProps) {
     return (
-        <div className="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col h-full">
-            <div className="h-32 bg-[#19439E]/5 flex items-center justify-center relative">
-                {unidade.foto ? (
-                    <img src={unidade.foto} alt={unidade.nome} className="w-full h-full object-cover" />
-                ) : (
-                    <Globe size={48} className="text-[#19439E]/20" />
-                )}
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md text-[10px] font-bold text-[#19439E]">
-                    ID: {unidade.id}
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:border-[#F08832]/30 transition-all group relative">
+            <div className="flex justify-between items-start mb-4">
+                {/* Ícone principal com fundo laranja claro */}
+                <div className="p-3 bg-orange-50 rounded-lg text-[#F08832]">
+                    {unidade.foto ? (
+                        <img src={unidade.foto} alt="Logo" className="w-6 h-6 object-cover rounded-sm" />
+                    ) : (
+                        <Building2 size={24} />
+                    )}
+                </div>
+
+                {/* Botões de Ação */}
+                <div className="flex gap-1">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="cursor-pointer h-8 w-8 text-gray-400 hover:text-blue-500"
+                        onClick={() => onEdit(unidade)}
+                    >
+                        <Edit size={16} />
+                    </Button>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="cursor-pointer h-8 w-8 text-gray-400 hover:text-red-500"
+                        onClick={() => onDelete(unidade.id)}
+                    >
+                        <Trash2 size={16} />
+                    </Button>
                 </div>
             </div>
 
-            <div className="p-5 flex-grow">
-                <div className="flex items-start gap-3">
-                    <div className="p-2 bg-[#F08832]/10 rounded-lg shrink-0">
-                        <MapPin size={20} className="text-[#F08832]" />
-                    </div>
-                    <div>
-                        <h3 className="text-lg font-bold text-gray-900 leading-tight">{unidade.nome}</h3>
-                        <p className="text-sm text-gray-500 font-medium">@{unidade.usuario}</p>
-                    </div>
+            {/* Badge ou Info extra */}
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 mb-2">
+                ID: {unidade.id}
+            </span>
+
+            <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-[#F08832] transition-colors">
+                {unidade.nome}
+            </h3>
+
+            {/* Informações adicionais */}
+            <div className="space-y-2 mt-4">
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <User size={16} className="text-[#F08832]" />
+                    <span className="truncate">{unidade.usuario}</span>
                 </div>
-            </div>
-
-            <div className="flex border-t border-gray-50">
-                {/* ROTA CORRIGIDA AQUI */}
-                <Link
-                    to={`/unidades/atualizar/${unidade.id}`}
-                    className="flex-1 flex items-center justify-center gap-2 py-3 text-sm font-bold text-gray-600 hover:bg-gray-50 hover:text-[#19439E] transition-colors border-r border-gray-50"
-                >
-                    <Edit3 size={16} />
-                    Editar
-                </Link>
-
-                {/* ROTA CORRIGIDA AQUI */}
-                <Link
-                    to={`/unidades/${unidade.id}`}
-                    className="flex-1 flex items-center justify-center gap-2 py-3 text-sm font-bold text-gray-400 hover:bg-red-50 hover:text-red-600 transition-colors"
-                >
-                    <Trash2 size={16} />
-                    Excluir
-                </Link>
+                {/* Placeholder para local ou outra info se houver */}
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <MapPin size={16} className="text-gray-400" />
+                    <span>Unidade Ativa</span>
+                </div>
             </div>
         </div>
     );

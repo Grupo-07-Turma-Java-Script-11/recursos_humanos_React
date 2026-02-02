@@ -2,18 +2,19 @@ import { useState, useContext, useEffect, ChangeEvent } from 'react';
 import { User, Camera, Save, Key, UserCircle, Mail } from 'lucide-react';
 import { AuthContext } from '../../contexts/AuthContext';
 import Unidade from '../../models/Unidade';
+import { Button } from '../components/ui/button';
 
 
 export function Profile() {
   const { unidade } = useContext(AuthContext); //
   const [isEditing, setIsEditing] = useState(false);
-  
+
   const [userData, setUserData] = useState<Unidade>({
     nome: '',
     usuario: '',
     senha: '',
-    foto: ''
-  }); //
+    foto: '',
+  })
 
   useEffect(() => {
     if (unidade && unidade.usuario !== '') {
@@ -21,7 +22,7 @@ export function Profile() {
         id: unidade.id,
         nome: unidade.nome,
         usuario: unidade.usuario,
-        senha: '', 
+        senha: '',
         foto: unidade.foto
       });
     }
@@ -38,25 +39,34 @@ export function Profile() {
   };
 
   return (
-    <div className="container mx-auto py-10 px-4 space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Meu Perfil</h1>
-        <p className="text-gray-500 font-medium">Gerencie as informações da unidade logada.</p>
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Meu Perfil</h1>
+          <p className="text-gray-500 text-sm">Gerencie as informações da unidade logada.</p>
+        </div>
+        <Button
+          onClick={() => isEditing ? handleSave() : setIsEditing(true)}
+          className={`gap-2 ${isEditing ? 'cursor-pointer bg-green-600 hover:bg-green-700' : 'cursor-pointer bg-[#F08832] hover:bg-[#d97728]'}`}
+        >
+          {isEditing ? <Save size={18} /> : null}
+          {isEditing ? 'Salvar Alterações' : 'Editar Perfil'}
+        </Button>
       </div>
 
       {/* O grid por padrão usa items-stretch, o que alinha as alturas */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-        
+
         {/* Card Lateral: Foto e Resumo */}
         <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 flex flex-col h-full">
           <div className="flex-1 flex flex-col items-center justify-center p-8">
             <div className="relative group">
               <div className="w-40 h-40 rounded-full bg-gray-100 flex items-center justify-center border-4 border-white shadow-inner overflow-hidden">
                 {userData.foto ? (
-                  <img 
-                    src={userData.foto} 
-                    alt={userData.nome} 
-                    className="w-full h-full object-cover" 
+                  <img
+                    src={userData.foto}
+                    alt={userData.nome}
+                    className="w-full h-full object-cover"
                   />
                 ) : (
                   <User size={80} className="text-gray-400" />
@@ -70,7 +80,7 @@ export function Profile() {
               {userData.nome || "Nome da Unidade"}
             </h2>
             <div className="mt-2 px-3 py-1 bg-orange-50 rounded-full">
-               <p className="text-[#F08832] font-bold text-xs uppercase tracking-widest">
+              <p className="text-[#F08832] font-bold text-xs uppercase tracking-widest">
                 ID da Unidade: {userData.id || "---"}
               </p>
             </div>
@@ -82,14 +92,6 @@ export function Profile() {
           <div className="p-8 space-y-8 flex-1">
             <div className="flex justify-between items-center pb-4 border-b border-gray-100">
               <h3 className="text-xl font-bold text-gray-800">Dados Cadastrais</h3>
-              <button 
-                onClick={() => isEditing ? handleSave() : setIsEditing(true)}
-                className={`flex items-center gap-2 px-6 py-2.5 rounded-lg font-bold text-white transition-all shadow-sm ${
-                  isEditing ? 'bg-green-600 hover:bg-green-700' : 'bg-[#F08832] hover:bg-[#d97728]'
-                }`}
-              >
-                {isEditing ? <><Save size={18}/> Salvar Alterações</> : 'Editar Perfil'}
-              </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">

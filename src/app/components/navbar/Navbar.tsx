@@ -34,7 +34,7 @@ function Navbar() {
             {/* Botão Toggle */}
             <button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="absolute -right-3 top-10 bg-[#F08832] text-white rounded-full p-1 shadow-md hover:bg-[#d97728] transition-colors z-50"
+                className="cursor-pointer absolute -right-3 top-10 bg-[#F08832] text-white rounded-full p-1 shadow-md hover:bg-[#d97728] transition-colors z-50"
             >
                 {isExpanded ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
             </button>
@@ -72,7 +72,7 @@ function Navbar() {
                         className="flex items-center gap-4 p-3 w-full text-gray-500 hover:text-red-600 hover:bg-red-50 transition-all rounded-lg group"
                     >
                         <LogOut size={24} className="shrink-0 group-hover:rotate-12 transition-transform" />
-                        {isExpanded && <span className="font-bold whitespace-nowrap">Sair do Sistema</span>}
+                        {isExpanded && <span className="cursor-pointer font-bold whitespace-nowrap">Sair do Sistema</span>}
                     </button>
                 </div>
             </div>

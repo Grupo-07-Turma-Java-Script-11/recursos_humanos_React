@@ -27,7 +27,7 @@ export function Employees() {
 
   // Copiando exatamente a lógica que funciona no seu Roles.tsx
   const config = {
-    headers: { Authorization: unidade.token } 
+    headers: { Authorization: unidade.token }
   };
 
   const carregarColaboradores = async () => {
@@ -56,8 +56,8 @@ export function Employees() {
     }
   };
 
-  const colaboradoresFiltrados = colaboradores.filter(c => 
-    c.nome?.toLowerCase().includes(busca.toLowerCase()) || 
+  const colaboradoresFiltrados = colaboradores.filter(c =>
+    c.nome?.toLowerCase().includes(busca.toLowerCase()) ||
     c.matricula?.toString().includes(busca)
   );
 
@@ -68,9 +68,9 @@ export function Employees() {
           <h1 className="text-2xl font-bold text-gray-900">Colaboradores</h1>
           <p className="text-gray-500">Gestão de funcionários e registros.</p>
         </div>
-        <Button 
+        <Button
           onClick={() => { setSelectedColaborador(null); setIsModalOpen(true); }}
-          className="bg-[#F08832] hover:bg-[#d97728] gap-2"
+          className="cursor-pointer bg-[#F08832] hover:bg-[#d97728] gap-2"
         >
           <UserPlus size={18} /> Novo Colaborador
         </Button>
@@ -80,9 +80,9 @@ export function Employees() {
         <div className="p-4 border-b border-gray-100">
           <div className="relative max-w-sm">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-            <Input 
-              className="pl-10" 
-              placeholder="Buscar por nome ou matrícula..." 
+            <Input
+              className="pl-10"
+              placeholder="Buscar por nome ou matrícula..."
               value={busca}
               onChange={(e) => setBusca(e.target.value)}
             />
@@ -113,12 +113,12 @@ export function Employees() {
                     <TableCell>{new Date(colab.data_admissao).toLocaleDateString()}</TableCell>
                     <TableCell>R$ {colab.salario_base}</TableCell>
                     <TableCell className="text-right flex justify-end gap-2">
-                        <Button variant="ghost" size="icon" className="text-blue-600" onClick={() => { setSelectedColaborador(colab); setIsModalOpen(true); }}>
-                          <Edit size={18} />
-                        </Button>
-                        <Button variant="ghost" size="icon" className="text-red-600" onClick={() => colab.id && handleExcluir(colab.id)}>
-                          <Trash2 size={18} />
-                        </Button>
+                      <Button variant="ghost" size="icon" className="cursor-pointer text-blue-600" onClick={() => { setSelectedColaborador(colab); setIsModalOpen(true); }}>
+                        <Edit size={18} />
+                      </Button>
+                      <Button variant="ghost" size="icon" className="cursor-pointer text-red-600" onClick={() => colab.id && handleExcluir(colab.id)}>
+                        <Trash2 size={18} />
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))
@@ -130,7 +130,7 @@ export function Employees() {
         )}
       </div>
 
-      <ModalColaborador 
+      <ModalColaborador
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSubmit={carregarColaboradores} // Recarregar após salvar

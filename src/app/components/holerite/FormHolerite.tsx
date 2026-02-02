@@ -41,7 +41,7 @@ export function FormHolerite({ colaborador }: { colaborador: Colaborador }) {
     setItens(novosItens);
   };
 
-  const calcularTotal = (tipo: 'provento' | 'desconto') => 
+  const calcularTotal = (tipo: 'provento' | 'desconto') =>
     itens.filter(i => i.tipo === tipo).reduce((acc, curr) => acc + Number(curr.valor), 0);
 
   const totalProventos = calcularTotal('provento');
@@ -59,7 +59,7 @@ export function FormHolerite({ colaborador }: { colaborador: Colaborador }) {
 
         <div className="flex justify-between items-center">
           <Label className="text-lg font-semibold">Editar Lançamentos</Label>
-          <Button type="button" variant="ghost" size="sm" onClick={adicionarCampo} className="text-[#F08832] gap-1">
+          <Button type="button" variant="ghost" size="sm" onClick={adicionarCampo} className="cursor-pointer text-[#F08832] gap-1">
             <Plus size={16} /> Adicionar Linha
           </Button>
         </div>
@@ -70,7 +70,7 @@ export function FormHolerite({ colaborador }: { colaborador: Colaborador }) {
               <Input placeholder="Descrição" value={item.descricao} onChange={(e) => atualizarItem(index, 'descricao', e.target.value)} />
             </div>
             <div className="w-28 space-y-1">
-              <select 
+              <select
                 className="h-10 w-full rounded-md border border-input bg-background px-2 text-sm"
                 value={item.tipo}
                 onChange={(e) => atualizarItem(index, 'tipo', e.target.value)}
@@ -82,14 +82,14 @@ export function FormHolerite({ colaborador }: { colaborador: Colaborador }) {
             <div className="w-32 space-y-1">
               <Input type="number" step="0.01" value={item.valor} onChange={(e) => atualizarItem(index, 'valor', e.target.value)} />
             </div>
-            <Button variant="ghost" size="icon" className="text-red-500 hover:bg-red-50" onClick={() => removerCampo(index)}>
+            <Button variant="ghost" size="icon" className="cursor-pointer text-red-500 hover:bg-red-50" onClick={() => removerCampo(index)}>
               <Trash2 size={18} />
             </Button>
           </div>
         ))}
       </div>
 
-      <Button onClick={() => handlePrint()} className="w-full bg-[#F08832] hover:bg-[#d97728] gap-2 py-6 text-lg font-bold">
+      <Button onClick={() => handlePrint()} className="cursor-pointer w-full bg-[#F08832] hover:bg-[#d97728] gap-2 py-6 text-lg font-bold">
         <Download size={20} /> Baixar Holerite (PDF)
       </Button>
 

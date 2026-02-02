@@ -1,25 +1,33 @@
-import FormUnidade from '../formunidade/FormUnidade';
-import Popup from 'reactjs-popup';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "../../ui/dialog";
+import FormUnidade from "../formunidade/FormUnidade";
+import Unidade from "../../../../models/Unidade";
 
-function ModalUnidade() {
+interface ModalUnidadeProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onSubmit: (data: Unidade) => void;
+    unidadeParaEditar?: Unidade | null;
+    loading?: boolean;
+}
+
+function ModalUnidade({ isOpen, onClose, onSubmit, unidadeParaEditar, loading }: ModalUnidadeProps) {
     return (
-        <>
-            <Popup
-                trigger={
-                    <button 
-                        className='border rounded px-4 py-2 hover:bg-white hover:text-indigo-800'>
-                        Nova Unidade
-                    </button>
-                }
-                modal
-                contentStyle={{
-                    borderRadius: '1rem',
-                    paddingBottom: '2rem'
-                }}
-            >
-                <FormUnidade />
-            </Popup>
-        </>
+        <Dialog open={isOpen} onOpenChange={onClose}>
+            <DialogContent className="sm:max-w-[500px]">
+                <DialogHeader>
+                    <DialogTitle>{unidadeParaEditar ? 'Editar Unidade' : 'Nova Unidade'}</DialogTitle>
+                    <DialogDescription>
+                        Preencha as informações da unidade de atendimento.
+                    </DialogDescription>
+                </DialogHeader>
+                <FormUnidade
+                    initialData={unidadeParaEditar}
+                    onSubmit={onSubmit}
+                    onCancel={onClose}
+                    loading={loading}
+                />
+            </DialogContent>
+        </Dialog>
     );
 }
 
