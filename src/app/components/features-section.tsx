@@ -1,10 +1,13 @@
-import { 
-  Users, Calendar, BarChart3, FileText, Clock, Shield, 
-  Search, GraduationCap, Smartphone, DollarSign, HeartHandshake, Zap 
+import {
+  Users, Calendar, BarChart3, FileText, Clock, Shield,
+  Search, GraduationCap, Smartphone, DollarSign, HeartHandshake, Zap
 } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
+
 
 
 export function FeaturesSection() {
+  const navigate = useNavigate();
   const features = [
     {
       icon: Users,
@@ -12,24 +15,24 @@ export function FeaturesSection() {
       description: 'Cadastro completo e organização eficiente de todos os dados dos seus colaboradores em um só lugar.',
       color: 'from-[#F08832] to-orange-600',
     },
-    {
-      icon: Calendar,
-      title: 'Controle de Férias',
-      description: 'Gerencie solicitações, aprovações e histórico de férias com facilidade e transparência.',
-      color: 'from-blue-500 to-blue-600',
-    },
-    {
-      icon: Clock,
-      title: 'Registro de Ponto',
-      description: 'Controle de ponto digital com relatórios automáticos de presença e horas trabalhadas.',
-      color: 'from-purple-500 to-purple-600',
-    },
-    {
-      icon: BarChart3,
-      title: 'Relatórios Analíticos',
-      description: 'Dashboards intuitivos e relatórios personalizados para tomada de decisões estratégicas.',
-      color: 'from-green-500 to-green-600',
-    },
+    // {
+    //   icon: Calendar,
+    //   title: 'Controle de Férias',
+    //   description: 'Gerencie solicitações, aprovações e histórico de férias com facilidade e transparência.',
+    //   color: 'from-blue-500 to-blue-600',
+    // },
+    // {
+    //   icon: Clock,
+    //   title: 'Registro de Ponto',
+    //   description: 'Controle de ponto digital com relatórios automáticos de presença e horas trabalhadas.',
+    //   color: 'from-purple-500 to-purple-600',
+    // },
+    // {
+    //   icon: BarChart3,
+    //   title: 'Relatórios Analíticos',
+    //   description: 'Dashboards intuitivos e relatórios personalizados para tomada de decisões estratégicas.',
+    //   color: 'from-green-500 to-green-600',
+    // },
     {
       icon: FileText,
       title: 'Documentação Digital',
@@ -48,30 +51,30 @@ export function FeaturesSection() {
       description: 'Pipeline completo de candidatos, triagem automatizada e histórico de entrevistas centralizado.',
       color: 'from-emerald-500 to-emerald-600',
     },
-    {
-      icon: GraduationCap,
-      title: 'Treinamento e PDI',
-      description: 'Plataforma para gestão de cursos e trilhas de desenvolvimento individual para seus talentos.',
-      color: 'from-yellow-500 to-yellow-600',
-    },
-    {
-      icon: Smartphone,
-      title: 'Aplicativo do Colaborador',
-      description: 'Autoatendimento completo onde o funcionário consulta holerites e solicita benefícios pelo celular.',
-      color: 'from-pink-500 to-pink-600',
-    },
+    // {
+    //   icon: GraduationCap,
+    //   title: 'Treinamento e PDI',
+    //   description: 'Plataforma para gestão de cursos e trilhas de desenvolvimento individual para seus talentos.',
+    //   color: 'from-yellow-500 to-yellow-600',
+    // },
+    // {
+    //   icon: Smartphone,
+    //   title: 'Aplicativo do Colaborador',
+    //   description: 'Autoatendimento completo onde o funcionário consulta holerites e solicita benefícios pelo celular.',
+    //   color: 'from-pink-500 to-pink-600',
+    // },
     {
       icon: DollarSign,
       title: 'Gestão de Benefícios',
       description: 'Administração simplificada de vale-transporte, alimentação, planos de saúde e seguros.',
       color: 'from-cyan-500 to-cyan-600',
     },
-    {
-      icon: HeartHandshake,
-      title: 'Clima Organizacional',
-      description: 'Ferramentas de pesquisa de satisfação e e-NPS para medir o engajamento da sua equipe.',
-      color: 'from-rose-500 to-rose-600',
-    },
+    // {
+    //   icon: HeartHandshake,
+    //   title: 'Clima Organizacional',
+    //   description: 'Ferramentas de pesquisa de satisfação e e-NPS para medir o engajamento da sua equipe.',
+    //   color: 'from-rose-500 to-rose-600',
+    // },
     {
       icon: Zap,
       title: 'Integração Automatizada',
@@ -121,7 +124,13 @@ export function FeaturesSection() {
 
         {/* CTA adicional */}
         <div className="mt-16 text-center">
-          <button className="bg-[#F08832] text-white px-8 py-4 rounded-lg hover:bg-[#d97728] transition-all duration-300 font-medium shadow-lg shadow-[#F08832]/25 hover:shadow-xl hover:shadow-[#F08832]/30">
+          <button
+            onClick={() => {
+              navigate("/funcionalidades");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="cursor-pointer bg-[#F08832] text-white px-8 py-4 rounded-lg hover:bg-[#d97728] transition-all duration-300 font-medium shadow-lg shadow-[#F08832]/25 hover:shadow-xl hover:shadow-[#F08832]/30"
+          >
             Explore Todas as Funcionalidades
           </button>
         </div>

@@ -1,20 +1,28 @@
 import { Mail, Phone, MapPin, Github, Linkedin, Instagram } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
 
 export function Footer() {
+  const navigate = useNavigate();
+
+  function goTo(path: string) {
+    navigate(path);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   return (
     <footer className="bg-gray-900 text-gray-300 pt-16 pb-8 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           {/* Logo e descrição */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-[#F08832] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">RH</span>
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center">
+                <img src="https://ik.imagekit.io/g3sqiqtmtf/People_Flow_logo_transp.png" alt="Logo" className="h-10 w-10" />
               </div>
-              <span className="text-xl font-semibold text-white">Sistema RH</span>
+              <span className="text-2xl font-bold text-white leading-tight">People Flow</span>
             </div>
             <p className="text-gray-400 mb-6 max-w-md">
-              Transformando a gestão de pessoas com tecnologia, simplicidade e eficiência. 
+              Transformando a gestão de pessoas com tecnologia, simplicidade e eficiência.
               A solução completa para o RH da sua empresa.
             </p>
             <div className="flex gap-4">
@@ -35,19 +43,40 @@ export function Footer() {
             <h3 className="text-white font-semibold mb-4">Links Rápidos</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#home" className="hover:text-[#F08832] transition-colors">Home</a>
+                <button
+                  onClick={() => goTo("/")}
+                  className="cursor-pointer hover:text-[#F08832] transition-colors"
+                >
+                  Home
+                </button>
               </li>
               <li>
-                <a href="#sobre" className="hover:text-[#F08832] transition-colors">Sobre</a>
+                <button
+                  onClick={() => goTo("/sobre")}
+                  className="cursor-pointer hover:text-[#F08832] transition-colors"
+                >
+                  Sobre
+                </button>
               </li>
               <li>
-                <a href="#funcionalidades" className="hover:text-[#F08832] transition-colors">Funcionalidades</a>
+                <button
+                  onClick={() => goTo("/funcionalidades")}
+                  className="cursor-pointer hover:text-[#F08832] transition-colors"
+                >
+                  Funcionalidades
+                </button>
               </li>
               <li>
-                <a href="#contato" className="hover:text-[#F08832] transition-colors">Contato</a>
+                <button
+                  onClick={() => goTo("/contato")}
+                  className="cursor-pointer hover:text-[#F08832] transition-colors"
+                >
+                  Contato
+                </button>
               </li>
             </ul>
           </div>
+
 
           {/* Contato */}
           <div>
@@ -73,7 +102,7 @@ export function Footer() {
         <div className="pt-8 border-t border-gray-800 text-center md:text-left">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
-              &copy; {new Date().getFullYear()} Sistema RH. Todos os direitos reservados.
+              &copy; {new Date().getFullYear()} People Flow. Todos os direitos reservados.
             </p>
             <div className="flex gap-6 text-sm">
               <a href="#" className="hover:text-[#F08832] transition-colors">Termos de Uso</a>

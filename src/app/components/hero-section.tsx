@@ -16,12 +16,12 @@ export function HeroSection() {
             <div className="inline-block px-4 py-2 bg-[#F08832]/10 rounded-full mb-6">
               <span className="text-[#F08832] font-medium text-sm">Sistema de Gestão de Pessoas</span>
             </div>
-            
+
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
               Transforme a gestão de{' '}
               <span className="text-[#F08832]">Recursos Humanos</span>
             </h1>
-            
+
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
               Uma plataforma completa e intuitiva para gerenciar colaboradores, processos de RH e otimizar a gestão de pessoas na sua empresa.
             </p>
@@ -32,10 +32,10 @@ export function HeroSection() {
                 <CheckCircle className="w-5 h-5 text-[#F08832] flex-shrink-0" />
                 <span className="text-gray-700">Gestão completa de colaboradores</span>
               </div>
-              <div className="flex items-center gap-3">
+              {/* <div className="flex items-center gap-3">
                 <CheckCircle className="w-5 h-5 text-[#F08832] flex-shrink-0" />
                 <span className="text-gray-700">Controle de ponto e frequência</span>
-              </div>
+              </div> */}
               <div className="flex items-center gap-3">
                 <CheckCircle className="w-5 h-5 text-[#F08832] flex-shrink-0" />
                 <span className="text-gray-700">Relatórios e análises em tempo real</span>
@@ -43,11 +43,11 @@ export function HeroSection() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-[#F08832] text-white px-8 py-4 rounded-lg hover:bg-[#d97728] transition-all duration-300 font-medium flex items-center justify-center gap-2 shadow-lg shadow-[#F08832]/25 hover:shadow-xl hover:shadow-[#F08832]/30">
+              <button className="cursor-pointer bg-[#F08832] text-white px-8 py-4 rounded-lg hover:bg-[#d97728] transition-all duration-300 font-medium flex items-center justify-center gap-2 shadow-lg shadow-[#F08832]/25 hover:shadow-xl hover:shadow-[#F08832]/30">
                 Começar Agora
                 <ArrowRight className="w-5 h-5" />
               </button>
-              <button className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg hover:border-[#F08832] hover:text-[#F08832] transition-all duration-300 font-medium">
+              <button className="cursor-pointer border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg hover:border-[#F08832] hover:text-[#F08832] transition-all duration-300 font-medium">
                 Saiba Mais
               </button>
             </div>

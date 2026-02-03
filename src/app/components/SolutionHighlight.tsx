@@ -1,6 +1,10 @@
 import { CheckCircle2, Zap, ShieldCheck, HeartHandshake } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
+
 
 export function SolutionHighlight() {
+
+  const navigate = useNavigate();
   const highlights = [
     {
       icon: Zap,
@@ -26,20 +30,20 @@ export function SolutionHighlight() {
     <section className="py-24 px-6 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          
+
           {/* Lado Esquerdo: Imagem e Elementos Visuais */}
           <div className="relative">
             {/* Decoração de fundo */}
             <div className="absolute -top-10 -left-10 w-64 h-64 bg-orange-100 rounded-full blur-3xl opacity-50" />
             <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50" />
-            
+
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-gray-100">
-              <img 
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800" 
-                alt="Equipe de RH trabalhando" 
+              <img
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
+                alt="Equipe de RH trabalhando"
                 className="w-full h-auto object-cover"
               />
-              
+
               {/* Card flutuante sobre a imagem */}
               <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-white/20 hidden md:block">
                 <div className="flex items-center gap-4">
@@ -81,7 +85,13 @@ export function SolutionHighlight() {
             </div>
 
             <div className="pt-4">
-              <button className="bg-gray-900 text-white px-8 py-4 rounded-xl font-bold hover:bg-black transition-all shadow-lg hover:shadow-gray-200">
+              <button
+                onClick={() => {
+                  navigate("/contato");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                className="cursor-pointer bg-gray-800 text-white px-8 py-4 rounded-xl font-bold hover:bg-black transition-all shadow-lg hover:shadow-gray-200"
+              >
                 Agendar Demonstração
               </button>
             </div>

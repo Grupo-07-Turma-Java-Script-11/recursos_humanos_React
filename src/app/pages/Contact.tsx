@@ -14,7 +14,7 @@ export function Contact() {
           <div>
             <h2 className="text-4xl font-bold text-gray-900 mb-6">Fale com um especialista</h2>
             <p className="text-lg text-gray-600 mb-10">
-              Dúvidas sobre os módulos? Precisa de uma demonstração personalizada? 
+              Dúvidas sobre os módulos? Precisa de uma demonstração personalizada?
               Estamos prontos para ajudar sua empresa.
             </p>
 
@@ -25,7 +25,7 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="font-bold">E-mail</p>
-                  <p className="text-gray-600">contato@sistemarh.com.br</p>
+                  <p className="text-gray-600">contato@peopleflow.com.br</p>
                 </div>
               </div>
               <div className="flex gap-4 items-center">
@@ -34,7 +34,7 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="font-bold">Telefone</p>
-                  <p className="text-gray-600">(11) 4007-1234</p>
+                  <p className="text-gray-600">(11) 4002-8922</p>
                 </div>
               </div>
             </div>

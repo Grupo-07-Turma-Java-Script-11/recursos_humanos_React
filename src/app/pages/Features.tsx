@@ -1,6 +1,6 @@
-import { 
-  Users, Clock, Calendar, BarChart3, FileText, 
-  Shield, Smartphone, Zap, Search, Bell 
+import {
+  Users, Clock, Calendar, BarChart3, FileText,
+  Shield, Smartphone, Zap, Search, Bell
 } from 'lucide-react';
 import { Card, CardContent } from "@/app/components/ui/card";
 import { DynamicExperience } from '../components/DynamicExperience';
@@ -13,18 +13,18 @@ export function FeaturesPage() {
       icon: Users,
       color: "bg-orange-100 text-[#F08832]"
     },
-    {
-      title: "Ponto Eletrônico Digital",
-      description: "Registro de jornada via web ou mobile com geolocalização e reconhecimento facial.",
-      icon: Clock,
-      color: "bg-blue-100 text-blue-600"
-    },
-    {
-      title: "Gestão de Férias e Ausências",
-      description: "Fluxo automatizado de solicitações, aprovações e cálculo de saldo de férias.",
-      icon: Calendar,
-      color: "bg-purple-100 text-purple-600"
-    },
+    // {
+    //   title: "Ponto Eletrônico Digital",
+    //   description: "Registro de jornada via web ou mobile com geolocalização e reconhecimento facial.",
+    //   icon: Clock,
+    //   color: "bg-blue-100 text-blue-600"
+    // },
+    // {
+    //   title: "Gestão de Férias e Ausências",
+    //   description: "Fluxo automatizado de solicitações, aprovações e cálculo de saldo de férias.",
+    //   icon: Calendar,
+    //   color: "bg-purple-100 text-purple-600"
+    // },
     {
       title: "Analytics e Dashboards",
       description: "Indicadores de turnover, absenteísmo e head count em tempo real para decisões estratégicas.",
@@ -69,7 +69,7 @@ export function FeaturesPage() {
             Uma plataforma completa para <br /> um RH sem burocracia.
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Centralize todos os seus processos em uma interface intuitiva, 
+            Centralize todos os seus processos em uma interface intuitiva,
             desenhada para economizar tempo e eliminar o uso de papel.
           </p>
         </div>
@@ -78,7 +78,7 @@ export function FeaturesPage() {
       {/* Grid de Funcionalidades */}
       <section className="py-24 bg-gray-50 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {allFeatures.map((f, i) => (
               <Card key={i} className="border-none shadow-sm hover:shadow-md transition-shadow bg-white">
                 <CardContent className="p-8">
@@ -102,7 +102,7 @@ export function FeaturesPage() {
           <div>
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Seu RH no bolso do colaborador</h2>
             <p className="text-gray-400 text-lg mb-8">
-              Com o nosso app mobile, seus funcionários podem bater ponto, solicitar férias 
+              Com o nosso app mobile, seus funcionários podem bater ponto, solicitar férias
               e visualizar holerites de qualquer lugar, mesmo sem internet.
             </p>
             <div className="flex flex-wrap gap-4">
@@ -117,15 +117,15 @@ export function FeaturesPage() {
             </div>
           </div>
           <div className="relative">
-             <div className="w-full h-64 bg-gradient-to-tr from-[#F08832] to-blue-600 rounded-3xl opacity-20 blur-3xl absolute" />
-             <div className="relative bg-gray-800 rounded-3xl p-8 border border-white/10 h-80 flex items-center justify-center">
-                <span className="text-gray-500 italic">[Mockup do App Mobile Aqui]</span>
-             </div>
+            <div className="w-full h-64 bg-gradient-to-tr from-[#F08832] to-blue-600 rounded-3xl opacity-20 blur-3xl absolute" />
+            <div className="relative bg-gray-800 rounded-3xl p-8 border border-white/10 h-80 flex items-center justify-center">
+              <span className="text-gray-500 italic">[Mockup do App Mobile Aqui]</span>
+            </div>
           </div>
         </div>
-        
+
       </section>
-      
+
     </div>
   );
 }

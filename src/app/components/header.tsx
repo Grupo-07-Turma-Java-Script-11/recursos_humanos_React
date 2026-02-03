@@ -1,8 +1,16 @@
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const goTo = (path: string) => {
+    navigate(path);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
@@ -18,22 +26,42 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="/" className="text-gray-600 hover:text-[#F08832] transition-colors font-medium">
+            <button
+              onClick={() => goTo("/")}
+              className="cursor-pointer text-gray-600 hover:text-[#F08832] transition-colors font-medium"
+            >
               Home
-            </a>
-            <a href="/sobre" className="text-gray-600 hover:text-[#F08832] transition-colors font-medium">
+            </button>
+
+            <button
+              onClick={() => goTo("/sobre")}
+              className="cursor-pointer text-gray-600 hover:text-[#F08832] transition-colors font-medium"
+            >
               Sobre
-            </a>
-            <a href="/funcionalidades" className="text-gray-600 hover:text-[#F08832] transition-colors font-medium">
+            </button>
+
+            <button
+              onClick={() => goTo("/funcionalidades")}
+              className="cursor-pointer text-gray-600 hover:text-[#F08832] transition-colors font-medium"
+            >
               Funcionalidades
-            </a>
-            <a href="/contato" className="text-gray-600 hover:text-[#F08832] transition-colors font-medium">
+            </button>
+
+            <button
+              onClick={() => goTo("/contato")}
+              className="cursor-pointer text-gray-600 hover:text-[#F08832] transition-colors font-medium"
+            >
               Contato
-            </a>
-            <a href="/login" className="bg-[#F08832] text-white px-6 py-2.5 rounded-lg hover:bg-[#d97728] transition-colors font-medium">
+            </button>
+
+            <button
+              onClick={() => goTo("/login")}
+              className="cursor-pointer bg-[#F08832] text-white px-6 py-2.5 rounded-lg hover:bg-[#d97728] transition-colors font-medium"
+            >
               Acessar Sistema
-            </a>
+            </button>
           </nav>
+
 
           {/* Mobile Menu Button */}
           <button
