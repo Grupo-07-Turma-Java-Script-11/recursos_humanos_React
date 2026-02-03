@@ -1,6 +1,15 @@
 import { ArrowRight, CheckCircle } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
 
 export function HeroSection() {
+
+  const navigate = useNavigate();
+
+  function goTo(path: string) {
+    navigate(path);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   return (
     <section id="home" className="relative pt-32 pb-20 px-6 overflow-hidden bg-gradient-to-br from-white via-orange-50/20 to-blue-50/30">
       {/* Background decorativo */}
@@ -43,11 +52,15 @@ export function HeroSection() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="cursor-pointer bg-[#F08832] text-white px-8 py-4 rounded-lg hover:bg-[#d97728] transition-all duration-300 font-medium flex items-center justify-center gap-2 shadow-lg shadow-[#F08832]/25 hover:shadow-xl hover:shadow-[#F08832]/30">
+              <button
+                onClick={() => goTo("/contato")}
+                className="cursor-pointer bg-[#F08832] text-white px-8 py-4 rounded-lg hover:bg-[#d97728] transition-all duration-300 font-medium flex items-center justify-center gap-2 shadow-lg shadow-[#F08832]/25 hover:shadow-xl hover:shadow-[#F08832]/30">
                 Começar Agora
                 <ArrowRight className="w-5 h-5" />
               </button>
-              <button className="cursor-pointer border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg hover:border-[#F08832] hover:text-[#F08832] transition-all duration-300 font-medium">
+              <button
+                onClick={() => goTo("/sobre")}
+                className="cursor-pointer border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg hover:border-[#F08832] hover:text-[#F08832] transition-all duration-300 font-medium">
                 Saiba Mais
               </button>
             </div>
