@@ -21,6 +21,7 @@ import { Holerite } from './pages/Holerite';
 import FormUnidade from './components/unidades/formunidade/FormUnidade';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
+import { ChatBot } from './components/chat/ChatBot'; // Importação do novo componente
 
 // 1. Layout de Autenticação
 function AuthLayout() {
@@ -48,12 +49,12 @@ function PublicLayout() {
       <main className="flex-grow">
         <Outlet />
       </main>
-      <Footer />
+      <footer />
     </div>
   );
 }
 
-// 3. Layout Interno
+// 3. Layout Interno (Protegido)
 function InternalLayout() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -64,6 +65,7 @@ function InternalLayout() {
           <Outlet />
         </main>
       </div>
+      <ChatBot />
     </div>
   );
 }
@@ -75,7 +77,7 @@ export default function App() {
       <Router>
         <Routes>
 
-          {/* Rotas de Autenticação - APENAS LOGIN AGORA */}
+          {/* Rotas de Autenticação */}
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<Login />} />
           </Route>

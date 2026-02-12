@@ -15,12 +15,16 @@ export const login = async (url: string, dados: Object, setDados: Function) => {
 }
 
 export const buscar = async (url: string, setDados: Function, header: Object) => {
-    // No GET, o segundo parâmetro já é o objeto de configuração (que contém os headers)
     const resposta = await api.get(url, header)
     setDados(resposta.data)
 }
 
 export const cadastrar = async (url: string, dados: Object, setDados: Function, header: Object) => {
+    const resposta = await api.post(url, dados, header)
+    setDados(resposta.data)
+}
+
+export const enviarChat = async (url: string, dados: Object, setDados: Function, header: Object) => {
     const resposta = await api.post(url, dados, header)
     setDados(resposta.data)
 }
