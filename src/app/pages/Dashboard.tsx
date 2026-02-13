@@ -46,7 +46,7 @@ export function Dashboard() {
     try {
       setLoadingExcel(true);
       
-      const response = await axios.get(`${baseURL}/colaboradores/relatorio/excel`, {
+      const response = await axios.get(`${baseURL}colaboradores/relatorio/excel`, {
         responseType: 'blob', // Necessário para arquivos binários
         headers: { 
           Authorization: unidadeLogada.token // Mesmo padrão de autenticação
